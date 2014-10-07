@@ -241,10 +241,9 @@ namespace ONote
         {
             int index;
             int start = 0;
-            int end = this.rtbEditor.Text.Length + 1;
             List<int> indexList = new List<int>();
 
-            while ((index = this.rtbEditor.Find(text, start, end, RichTextBoxFinds.MatchCase)) != -1)
+            while ((index = this.rtbEditor.Text.ToLower().IndexOf(text.ToLower(), start)) != -1)
             {
                 indexList.Add(index);
                 start = index + text.Length;
