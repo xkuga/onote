@@ -1,0 +1,10 @@
+D:\cs_project\ONote\ONote\bin\Debug\ONote.exe
+D:\cs_project\ONote\ONote\bin\Debug\ONote.pdb
+D:\cs_project\ONote\ONote\obj\x86\Debug\ONote.Editor.resources
+D:\cs_project\ONote\ONote\obj\x86\Debug\ONote.InputBox.resources
+D:\cs_project\ONote\ONote\obj\x86\Debug\ONote.Properties.Resources.resources
+D:\cs_project\ONote\ONote\obj\x86\Debug\ONote.exe
+D:\cs_project\ONote\ONote\obj\x86\Debug\ONote.pdb
+D:\cs_project\ONote\ONote\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\cs_project\ONote\ONote\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\cs_project\ONote\ONote\obj\x86\Debug\GenerateResource.write.1.tlog

@@ -283,9 +283,6 @@ namespace ONote
                 subKey[i] = ByteArrayToMatrix(SubByteArray(expandKey, 16 * i, 16));
             }
 
-            // 把iv转为矩阵状态
-            byte[,] ivState = ByteArrayToMatrix(iv);
-
             // 调整字节流，进行填充处理
             byte[] paddingStream = PaddingStream(stream);
 
@@ -298,6 +295,9 @@ namespace ONote
                 state[i] = ByteArrayToMatrix(SubByteArray(paddingStream, 16 * i, 16));
             }
 
+            // 把iv转为矩阵状态
+            byte[,] ivState = ByteArrayToMatrix(iv);
+
             // 以CBC模式对每一个状态矩阵进行加密
             Xor(state[0], ivState);
             EncryptUnit(state[0], subKey);
@@ -308,8 +308,6 @@ namespace ONote
                 EncryptUnit(state[i], subKey);
             }
 
-            // Print(state);
-
             // 加密后的字节数组
             byte[] encryptedBytes = new byte[paddingStream.Length];
 
@@ -318,6 +316,8 @@ namespace ONote
             {
                 Array.Copy(MatrixToByteArray(state[i]), 0, encryptedBytes, 16 * i, 16);
             }
+
+            // Print(encryptedBytes);
 
             // 返回盐和加密后的字节数组
             return MergeByteArray(salt, encryptedBytes);
@@ -516,7 +516,7 @@ namespace ONote
 
         /// <summary>状态矩阵字节替代的逆操作</summary>
         /// <param name="state">状态矩阵，即4*4的字节矩阵</param>
-        void InvSubBytes(byte[,] state)
+        private void InvSubBytes(byte[,] state)
         {
             int r, c;
 
@@ -531,7 +531,7 @@ namespace ONote
 
         /// <summary>状态矩阵行移动的逆操作</summary>
         /// <param name="state">状态矩阵，即4*4的字节矩阵</param>
-        void InvShiftRows(byte[,] state)
+        private void InvShiftRows(byte[,] state)
         {
             int r, c;
             byte[] t = new byte[4];
@@ -552,7 +552,7 @@ namespace ONote
 
         /// <summary>列混淆的逆操作</summary>
         /// <param name="state">状态矩阵，即4*4的字节矩阵</param>
-        void InvMixColumns(byte[,] state)
+        private void InvMixColumns(byte[,] state)
         {
             int r, c;
             byte[] a = new byte[4];
@@ -792,26 +792,6 @@ namespace ONote
             }
         }
 
-        /// <summary>打印状态矩阵数组</summary>
-        /// <param name="state">状态矩阵数组</param>
-        private void Print(byte[][,] state)
-        {
-            int i, r, c;
-
-            for (i = 0; i < state.Length; i++)
-            {
-                for (r = 0; r < 4; r++)
-                {
-                    for (c = 0; c < 4; c++)
-                    {
-                        Console.Write(Convert.ToString(state[i][r, c], 16) + " ");
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
-            }
-        }
-
         /// <summary>以矩阵的形式打印字节数组，每16个字节为一个矩阵</summary>
         /// <param name="state">字节数组</param>
         private void Print(byte[] bytes)
@@ -820,9 +800,9 @@ namespace ONote
 
             for (i = 0; i < bytes.Length / 16; i++)
             {
-                for (c = 0; c < 4; c++)
+                for (r = 0; r < 4; r++)
                 {
-                    for (r = 0; r < 4; r++)
+                    for (c = 0; c < 4; c++)
                     {
                         Console.Write(Convert.ToString(bytes[16 * i + 4 * c + r], 16) + " ");
                     }

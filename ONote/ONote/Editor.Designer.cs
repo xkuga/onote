@@ -35,6 +35,8 @@
             this.saveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wordWrapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,14 +44,21 @@
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.rtbEditor = new System.Windows.Forms.RichTextBox();
+            this.gbxFind = new System.Windows.Forms.GroupBox();
+            this.btnFindPrev = new System.Windows.Forms.Button();
+            this.txtFind = new System.Windows.Forms.TextBox();
+            this.btnFindClose = new System.Windows.Forms.Button();
+            this.btnFindNext = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.statusBar.SuspendLayout();
+            this.gbxFind.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.otherToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -109,6 +118,22 @@
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.findToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(42, 21);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.findToolStripMenuItem.Text = "Find";
+            this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
+            // 
             // otherToolStripMenuItem
             // 
             this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -147,7 +172,7 @@
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusBarLabel});
-            this.statusBar.Location = new System.Drawing.Point(0, 539);
+            this.statusBar.Location = new System.Drawing.Point(0, 540);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(784, 22);
             this.statusBar.TabIndex = 4;
@@ -164,21 +189,83 @@
             this.rtbEditor.AcceptsTab = true;
             this.rtbEditor.BackColor = System.Drawing.SystemColors.Window;
             this.rtbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbEditor.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.rtbEditor.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.rtbEditor.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.rtbEditor.HideSelection = false;
             this.rtbEditor.Location = new System.Drawing.Point(0, 25);
             this.rtbEditor.Name = "rtbEditor";
-            this.rtbEditor.Size = new System.Drawing.Size(784, 514);
+            this.rtbEditor.Size = new System.Drawing.Size(784, 515);
             this.rtbEditor.TabIndex = 5;
             this.rtbEditor.Text = "";
+            this.rtbEditor.HScroll += new System.EventHandler(this.rtbEditor_HScroll);
+            this.rtbEditor.VScroll += new System.EventHandler(this.rtbEditor_VScroll);
             this.rtbEditor.TextChanged += new System.EventHandler(this.rtbEditor_TextChanged);
+            // 
+            // gbxFind
+            // 
+            this.gbxFind.BackColor = System.Drawing.SystemColors.Window;
+            this.gbxFind.Controls.Add(this.btnFindPrev);
+            this.gbxFind.Controls.Add(this.txtFind);
+            this.gbxFind.Controls.Add(this.btnFindClose);
+            this.gbxFind.Controls.Add(this.btnFindNext);
+            this.gbxFind.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.gbxFind.Location = new System.Drawing.Point(311, 35);
+            this.gbxFind.Name = "gbxFind";
+            this.gbxFind.Size = new System.Drawing.Size(447, 52);
+            this.gbxFind.TabIndex = 6;
+            this.gbxFind.TabStop = false;
+            this.gbxFind.Text = "Find";
+            this.gbxFind.Visible = false;
+            // 
+            // btnFindPrev
+            // 
+            this.btnFindPrev.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnFindPrev.Location = new System.Drawing.Point(280, 19);
+            this.btnFindPrev.Name = "btnFindPrev";
+            this.btnFindPrev.Size = new System.Drawing.Size(49, 23);
+            this.btnFindPrev.TabIndex = 3;
+            this.btnFindPrev.Text = "Prev";
+            this.btnFindPrev.UseVisualStyleBackColor = true;
+            this.btnFindPrev.Click += new System.EventHandler(this.btnFindPrev_Click);
+            // 
+            // txtFind
+            // 
+            this.txtFind.Location = new System.Drawing.Point(6, 19);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(268, 23);
+            this.txtFind.TabIndex = 0;
+            this.txtFind.TextChanged += new System.EventHandler(this.txtFind_TextChanged);
+            this.txtFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFind_KeyPress);
+            // 
+            // btnFindClose
+            // 
+            this.btnFindClose.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnFindClose.Location = new System.Drawing.Point(390, 19);
+            this.btnFindClose.Name = "btnFindClose";
+            this.btnFindClose.Size = new System.Drawing.Size(49, 23);
+            this.btnFindClose.TabIndex = 2;
+            this.btnFindClose.Text = "Close";
+            this.btnFindClose.UseVisualStyleBackColor = true;
+            this.btnFindClose.Click += new System.EventHandler(this.btnFindClose_Click);
+            // 
+            // btnFindNext
+            // 
+            this.btnFindNext.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnFindNext.Location = new System.Drawing.Point(335, 19);
+            this.btnFindNext.Name = "btnFindNext";
+            this.btnFindNext.Size = new System.Drawing.Size(49, 23);
+            this.btnFindNext.TabIndex = 1;
+            this.btnFindNext.Text = "Next";
+            this.btnFindNext.UseVisualStyleBackColor = true;
+            this.btnFindNext.Click += new System.EventHandler(this.btnFindNext_Click);
             // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.gbxFind);
             this.Controls.Add(this.rtbEditor);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.menuStrip);
@@ -188,10 +275,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Editor_FormClosing);
             this.Load += new System.EventHandler(this.Editor_Load);
+            this.Resize += new System.EventHandler(this.Editor_Resize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
+            this.gbxFind.ResumeLayout(false);
+            this.gbxFind.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +303,13 @@
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.RichTextBox rtbEditor;
         private System.Windows.Forms.ToolStripStatusLabel statusBarLabel;
+        private System.Windows.Forms.GroupBox gbxFind;
+        private System.Windows.Forms.TextBox txtFind;
+        private System.Windows.Forms.Button btnFindClose;
+        private System.Windows.Forms.Button btnFindNext;
+        private System.Windows.Forms.Button btnFindPrev;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
 
 
     }
